@@ -25,7 +25,7 @@ public class DiskUsageController extends BaseController {
 
         // Work out the free disk space percentage on the / disk
 
-        final Pattern diskUsagePattern = Pattern.compile("([0-9.]+%)"); // Heavy cpu so do out of loops.
+        final Pattern diskUsagePattern = Pattern.compile("([0-9.]+'C)"); // Heavy cpu so do out of loops.
 
         final Handler handler = new Handler();
         handler.post(new Runnable() {
@@ -34,7 +34,7 @@ public class DiskUsageController extends BaseController {
 
                 try {
 
-                    getPluginClient().executeCommandOnSession(getSessionId(), getSessionKey(), "df | grep ' /$'", new OnSessionExecuteListener() {
+                    getPluginClient().executeCommandOnSession(getSessionId(), getSessionKey(), "/opt/vc/bin/vcgencmd measure_temp", new OnSessionExecuteListener() {
                         @Override
                         public void onCompleted(int exitCode) {
                             switch(exitCode){
